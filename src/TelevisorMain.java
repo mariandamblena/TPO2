@@ -10,5 +10,6 @@ public class TelevisorMain {
         System.out.println(tv1.mostrarInformacion());
         System.out.println(tv2.mostrarInformacion());
         System.out.println(tv3.mostrarInformacion());
+
     }
 }
