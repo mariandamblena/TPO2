@@ -6,19 +6,16 @@ public class Televisor {
     private String modelo;
     private int anioDeFabricacion;
     private TipoTelevisor tipo;
-    private double tamanoPulgadas;
-    private String resolucion;
-    private boolean smart;
+    private Pantalla pantalla;  // Componente compartido
+    private boolean encendido;  // Estado del televisor
 
-    public Televisor(String marca, String modelo, TipoTelevisor tipo, int anioDeFabricacion,
-                     double tamanoPulgadas, String resolucion, boolean smart) {
+    public Televisor(String marca, String modelo, TipoTelevisor tipo, int anioDeFabricacion, Pantalla pantalla) {
         this.marca = marca;
         this.modelo = modelo;
         this.tipo = tipo;
         this.anioDeFabricacion = anioDeFabricacion;
-        this.tamanoPulgadas = tamanoPulgadas;
-        this.resolucion = resolucion;
-        this.smart = smart;
+        this.pantalla = pantalla;
+        this.encendido = false; // Inicialmente apagado
     }
 
     // Getters y setters
@@ -54,41 +51,38 @@ public class Televisor {
         this.tipo = tipo;
     }
 
-    public double getTamanoPulgadas() {
-        return tamanoPulgadas;
+    public Pantalla getPantalla() {
+        return pantalla;
     }
 
-    public void setTamanoPulgadas(double tamanoPulgadas) {
-        this.tamanoPulgadas = tamanoPulgadas;
+    public void setPantalla(Pantalla pantalla) {
+        this.pantalla = pantalla;
     }
 
-    public String getResolucion() {
-        return resolucion;
+    public boolean isEncendido() {
+        return encendido;
     }
 
-    public void setResolucion(String resolucion) {
-        this.resolucion = resolucion;
+    // Método para encender el televisor (y su pantalla)
+    public void encender() {
+        encendido = true;
+        pantalla.encender();
     }
 
-    public boolean isSmart() {
-        return smart;
+    // Método para apagar el televisor (y su pantalla)
+    public void apagar() {
+        encendido = false;
+        pantalla.apagar();
     }
 
-    public void setSmart(boolean smart) {
-        this.smart = smart;
-    }
-
-    // Método para mostrar la información del televisor en el formato solicitado
+    // Método para mostrar la información del televisor
     public String mostrarInformacion() {
-        String smartText = smart ? "Smart" : "No Smart";
-        /* es lo mismo que el condicional f
-        * String smartText;
-            if (smart) {
-            smartText = "Smart";
-            } else {
-            smartText = "No Smart";
-            }
-        * */
-        return marca + " " + modelo + " -- " + tamanoPulgadas + " pulgadas -- " + resolucion + " -- " + smartText;
+        String estadoTv = encendido ? "Encendido" : "Apagado";
+        return marca + " " + modelo + " -- " + pantalla.mostrarInformacionPantalla() + " -- Televisor: " + estadoTv;
+    }
+
+    @Override
+    public String toString() {
+        return mostrarInformacion();
     }
 }
